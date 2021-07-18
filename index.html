@@ -25,7 +25,7 @@
                 <input
                   type="search"
                   placeholder="Type a city..."
-                  class="form-control"
+                  class="form-control shadow-sm"
                   id="city-input"
                   autocomplete="off"
                 />
@@ -34,7 +34,7 @@
                 <input
                   type="submit"
                   value="Search"
-                  class="btn btn-primary w-100"
+                  class="btn btn-primary shadow-sm w-100"
                 />
               </div>
             </div>
@@ -57,7 +57,13 @@
                 />
                 <div class="float-left">
                   <strong id="temperature"></strong
-                  ><span class="units"> °C | °F </span>
+                  ><span class="units">
+                    <a href="#" id="celsius-link"> °C</a>|<a
+                      href="#"
+                      id="fahrenheit-link"
+                      >°F</a
+                    >
+                  </span>
                 </div>
               </div>
             </div>
