@@ -22,27 +22,40 @@ function formatDate(timestamp) {
   return `${day} ${hours}:${minutes}`;
 }
 
-function displayForecast() {
-  let displayForecast = document.querySelector("#forecast");
-  forecastElement.innerHTML = `
-  <div class="row">
+function displayForecast(response) {
+  let frorecastElement = document.querySelector("#forecast");
+
+  let forecastHTML = `<div class="row"`;
+  let days = ["Thur", "Fri", "Sat", "Sun", "Mon"];
+  days.forEach(function (day) {
+    forecastHTML =
+      forecastHTML +
+      `
               <div class="col-2">
                 <div class="weather-forecast-date">
-                Thur
+                ${day}
                 </div>
                 <img
-                  src="https://ssl.gstatic.com/onebox/weather/64/partly_cloudy.png"
+                  src="http://openweathermap.org/img/wn/01d@2x.png"
                   alt=""
-                  width="36"
+                  width="42"
                 />
-              </br>
-              <div class="weather-forecast-temperature"> 
+              <div class="weather-forecast-temperatures"> 
                 <span class="weather-forecast-temperature-max">18</span> 
                 <span class="weather-forecast-temperature-min">12</span>
                 </div>
               </div>
-            </div>
   `;
+  });
+
+  forecastHTML = forecastHTML + `</div>`;
+  frorecastElement.innerHTML = forecastHTML;
+}
+
+function getForecast(coordinates) {
+  let apiKey = "f5ddc1c4d2338589a5fde9611a79fb8b";
+  let apiUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${coordinates.lat}&lon=${coordinates.lon}&appid={APIkey}&units=metric`;
+  axios.get(apiUrl).then(displayForecast);
 }
 
 function displayTemperature(response) {
@@ -66,6 +79,8 @@ function displayTemperature(response) {
   iconElement.setAttribute("alt", response.data.weather[0].description);
 
   celsiusTemperature = response.data.main.temp;
+
+  getForecast(response.data.coord);
 }
 function search(city) {
   let apiKey = "f5ddc1c4d2338589a5fde9611a79fb8b";
@@ -98,7 +113,6 @@ function displayCelsiusTemperature(event) {
 }
 
 let celsiusTemperature = null;
-displayForecast();
 
 let form = document.querySelector("#search-form");
 form.addEventListener("submit", handleSubmit);
